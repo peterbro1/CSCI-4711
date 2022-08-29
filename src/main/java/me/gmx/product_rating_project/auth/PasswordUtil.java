@@ -21,7 +21,4 @@ public class PasswordUtil {
         return hash.toString();
     }
 
-    public static String passwordMatches(User user, String password){
-        //TODO
-    }
 }

@@ -22,10 +22,7 @@ public class Main {
     public static void main(String[] args) {
         logger = Logger.getLogger("log");
         PRSApplication app = new PRSApplication();
-        app.
-    }
-
-    public void init(){
+        app.init();
 
     }
 
