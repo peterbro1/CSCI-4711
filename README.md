@@ -12,7 +12,7 @@ Peter Browning, Brett Williams, Kaney Nguyen, Trajan Salinas, \[other person\]
 ## Contrib
 
 `JDK 17`
-`Maven 7`
+`Maven 3.8`
 
 ## Running
 
