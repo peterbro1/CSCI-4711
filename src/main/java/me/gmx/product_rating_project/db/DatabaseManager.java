@@ -13,6 +13,7 @@ Not sure what I want to do with this class yet.
  */
 public class DatabaseManager {
     private static Connection connection;
+
     private static final String PATH = "./database.db";
 
     private PRSApplication ins;
