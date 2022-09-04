@@ -13,12 +13,23 @@ Not sure what I want to do with this class yet.
  */
 public class DatabaseManager {
     private static Connection connection;
+
     private static final String PATH = "./database.db";
 
     private PRSApplication ins;
     public DatabaseManager(PRSApplication ins){
         this.ins = ins;
     }
+
+    public PreparedStatement getPreparedStatement(String s){
+        try {
+            return connection.prepareStatement(s);
+        }catch(SQLException e){
+            e.printStackTrace();
+            Main.logE("Failed to fetch statement " + s);
+            return null;
+        }
+        }
 
 
     private void initDatabase(){
@@ -63,20 +74,33 @@ public class DatabaseManager {
     }
 
     public String getUserPassword(User user)throws SQLException{
-        //TODO
+        PreparedStatement st = connection.prepareStatement("SELECT password FROM USERS WHERE id = ?");
+        st.setInt(1, user.getId());
+        ResultSet rs = st.executeQuery();
+        String s = rs.getString(1);
+        return s;
     }
 
     public boolean comparePasswords(User user, String password){
         try {
-            PreparedStatement st = connection.prepareStatement("SELECT password FROM USERS WHERE id = ?");
-            st.setString(1, user.getId().toString());
-            ResultSet rs = st.executeQuery();
-            String s = rs.getString(1);
-            return s.equals(password);
+            return getUserPassword(user).equals(password);
         }catch(SQLException e){
             e.printStackTrace();
             Main.logE("Failed to compare passwords!");
             return false;
+        }
+    }
+
+    public boolean isNameTaken(String s){
+        try{
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM USERS WHERE username = ?");
+            st.setString(1, s);
+            ResultSet rs = st.executeQuery();
+            return rs.next()==true;
+        }catch(SQLException e){
+            e.printStackTrace();
+            Main.logE("Failed to check duplicate user name " + s);
+            return true;
         }
     }
 

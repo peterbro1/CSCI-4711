@@ -5,8 +5,8 @@ import me.gmx.product_rating_project.ui.FrontEndGUI;
 
 public class PRSApplication {
 
-    private FrontEndGUI gui;
-    private DatabaseManager db;
+    public FrontEndGUI gui;
+    public DatabaseManager db;
     private static PRSApplication ins;
     public PRSApplication(){
         ins = this;
