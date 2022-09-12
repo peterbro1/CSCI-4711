@@ -1,11 +1,12 @@
 package me.gmx.product_rating_project;
 
 import me.gmx.product_rating_project.db.DatabaseManager;
+import me.gmx.product_rating_project.thread.GUIThread;
 import me.gmx.product_rating_project.ui.FrontEndGUI;
 
 public class PRSApplication {
 
-    public FrontEndGUI gui;
+    private GUIThread thread;
     public DatabaseManager db;
     private static PRSApplication ins;
     public PRSApplication(){
@@ -14,8 +15,10 @@ public class PRSApplication {
 
     public void init(){
         //Dependency injection :D
-        gui = new FrontEndGUI(ins);
+        thread = new GUIThread("GUI", new FrontEndGUI(ins));
+        thread.run();
         db = new DatabaseManager(ins);
+
     }
 
     //Dependency injection D:

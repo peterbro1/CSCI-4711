@@ -5,8 +5,11 @@ import me.gmx.product_rating_project.ui.FrontEndGUI;
 
 public class GUIThread extends Thread {
 
-    public GUIThread(String s) {
+
+    private FrontEndGUI apo;
+    public GUIThread(String s, FrontEndGUI apo) {
         super(s);
+        this.apo = apo;
     }
 
     public void run() {

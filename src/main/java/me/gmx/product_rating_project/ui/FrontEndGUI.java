@@ -17,11 +17,15 @@ public class FrontEndGUI extends Application {
         this.ins = ins;
     }
 
+    public FrontEndGUI(){}
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/login-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setTitle("Product Rating System");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
