@@ -2,11 +2,13 @@ package me.gmx.product_rating_project;
 
 import me.gmx.product_rating_project.db.DatabaseManager;
 import me.gmx.product_rating_project.thread.GUIThread;
-import me.gmx.product_rating_project.ui.FrontEndGUI;
+import me.gmx.product_rating_project.ui.GUIController;
 
 public class PRSApplication {
 
     private GUIThread thread;
+
+
     public DatabaseManager db;
     private static PRSApplication ins;
     public PRSApplication(){
@@ -15,10 +17,14 @@ public class PRSApplication {
 
     public void init(){
         //Dependency injection :D
-        thread = new GUIThread("GUI", new FrontEndGUI(ins));
-        thread.run();
+        startGUIThread();
         db = new DatabaseManager(ins);
+    }
 
+    public void startGUIThread(){
+        if (thread == null)
+            thread = new GUIThread("GUI");
+        thread.run();
     }
 
     //Dependency injection D:

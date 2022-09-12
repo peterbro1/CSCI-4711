@@ -1,19 +1,17 @@
 package me.gmx.product_rating_project.thread;
 
 import javafx.application.Application;
-import me.gmx.product_rating_project.ui.FrontEndGUI;
+import me.gmx.product_rating_project.ui.GUIController;
 
 public class GUIThread extends Thread {
 
 
-    private FrontEndGUI apo;
-    public GUIThread(String s, FrontEndGUI apo) {
+    public GUIThread(String s) {
         super(s);
-        this.apo = apo;
     }
 
     public void run() {
-        Application.launch(FrontEndGUI.class);
+        Application.launch(GUIController.class);
     }
 
 }

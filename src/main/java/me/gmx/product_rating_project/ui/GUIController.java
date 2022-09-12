@@ -1,37 +1,69 @@
 package me.gmx.product_rating_project.ui;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import me.gmx.product_rating_project.auth.PasswordUtil;
-import me.gmx.product_rating_project.util.ValidationUtil;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import me.gmx.product_rating_project.PRSApplication;
 
-public class GUIController {
+import java.io.IOException;
 
-    @FXML
-    private Button loginButton;
+public class GUIController extends Application {
 
-    @FXML
-    private PasswordField passwordField;
+    private Parent content;
+    public static GUIController ins;
+    private Stage stage;
 
-    @FXML
-    private TextField usernameField;
-
-    @FXML
-    private Label alertLabel;
-
-    @FXML
-    protected void attemptLogin() {
-        String username, password;
-        username = usernameField.getText();
-        password = passwordField.getText();
-        if (ValidationUtil.isAlphaNumeric(username) || ValidationUtil.isAlphaNumeric(password)){
-         alertLabel.setText("Usernames and passwords must be alpha-numeric!");
-         return;
-        }
-        String hash = PasswordUtil.hashPassword(password);
-
+    public GUIController(){
+        ins = this;
     }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        initMain();
+        Scene scene = new Scene(content, 1280, 720);
+        stage.setTitle("Product Rating System");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+        this.stage = stage;
+    }
+
+    public void initMain() throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/login-view.fxml"));
+        content = fxmlLoader.load();
+    }
+
+
+    public void openUserPanel()throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/fxml/user-view.fxml"));
+        content = loader.load();
+        Scene scene = new Scene(content);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void openLoginPanel()throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/login-view.fxml"));
+        content = fxmlLoader.load();
+        Scene scene = new Scene(content);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+    public synchronized static GUIController getInstance() {
+        if (ins == null) {
+            PRSApplication.getInstance().startGUIThread();
+            while (ins == null)
+                try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+        }
+        return ins;
+    }
+
+
 }
