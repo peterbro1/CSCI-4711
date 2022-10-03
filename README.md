@@ -2,7 +2,15 @@
 
 ## Collaborators:
 
-Peter Browning, Brett Williams, Kaney Nguyen, Trajan Salinas, \[other person\]
+Brett Williams
+
+Kaney Nguyen
+
+Peter Browning
+
+Trajan Salinas
+
+Richard Kelley
 
 
 ## Build

@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import me.gmx.product_rating_project.PRSApplication;
+import me.gmx.product_rating_project.Product;
+import me.gmx.product_rating_project.ui.user.RatingViewController;
 
 import java.io.IOException;
 
@@ -17,6 +19,7 @@ public class GUIController extends Application {
 
     public GUIController(){
         ins = this;
+        PRSApplication.getInstance().guiCallback(this);
     }
 
     @Override
@@ -55,12 +58,26 @@ public class GUIController extends Application {
         stage.show();
     }
 
+    public void openRatingPanel(Product p)throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/rating-view.fxml"));
+        RatingViewController.product = p;
+        content = fxmlLoader.load();
+        Scene scene = new Scene(content);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     public synchronized static GUIController getInstance() {
         if (ins == null) {
             PRSApplication.getInstance().startGUIThread();
             while (ins == null)
-                try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
         }
         return ins;
     }
