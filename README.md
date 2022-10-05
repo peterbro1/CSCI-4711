@@ -20,7 +20,7 @@ Richard Kelley
 ## Contrib
 
 `JDK 17`
-`Maven 7`
+`Maven 3.8`
 
 ## Running
 
