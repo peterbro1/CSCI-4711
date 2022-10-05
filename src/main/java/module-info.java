@@ -8,4 +8,5 @@ module me.gmx.product_rating_project {
     exports me.gmx.product_rating_project;
     exports me.gmx.product_rating_project.ui;
     opens me.gmx.product_rating_project.ui to javafx.fxml;
+    opens me.gmx.product_rating_project.ui.user to javafx.fxml;
 }

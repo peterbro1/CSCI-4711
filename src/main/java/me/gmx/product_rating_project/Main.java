@@ -1,13 +1,11 @@
 package me.gmx.product_rating_project;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import me.gmx.product_rating_project.auth.PasswordUtil;
 import me.gmx.product_rating_project.db.DatabaseManager;
-import me.gmx.product_rating_project.ui.FrontEndGUI;
+import me.gmx.product_rating_project.ui.GUIController;
 
-import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,15 +13,33 @@ public class Main {
 
     public static Logger logger;
     private DatabaseManager db;
-
-    private FrontEndGUI gui;
+    private GUIController gui;
 
 
     public static void main(String[] args) {
+
         logger = Logger.getLogger("log");
         PRSApplication app = new PRSApplication();
         app.init();
+    }
 
+    public static void test(){
+        DatabaseManager db = new DatabaseManager(PRSApplication.getInstance());
+        db.init();
+        PreparedStatement st = db.getPreparedStatement("SELECT * FROM USERS WHERE username LIKE \"alice\"");
+        try {
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()){
+                System.out.println(rs.getString("username"));
+                System.out.println(rs.getString("password"));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        System.exit(0);
     }
 
     public static void logI(String s){

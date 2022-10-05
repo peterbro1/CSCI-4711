@@ -16,12 +16,12 @@ public class User {
 
     protected String displayName;
 
-    public static User loadUser(int id) throws NullPointerException{
+    public static User loadUserFromId(int id) throws NullPointerException{
         try{
             PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE id = ?");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            if (rs.next()==false)
+            if (!rs.next())
                 throw new NullPointerException("Cannot find user with id: " + id);
 
             return new User(rs.getInt("id"),rs.getString("username")
@@ -29,6 +29,44 @@ public class User {
         }catch(SQLException e){
             e.printStackTrace();
             Main.logE("Failed to fetch user from ID: " + id);
+            return null;
+        }
+    }
+
+
+    //Insecure?
+    @Deprecated
+    public static User loadUserFromName(String name) throws NullPointerException{
+        try{
+            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE username = ?");
+            st.setString(1, name);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next())
+                throw new NullPointerException("Cannot find user with name: " + name);
+
+            return new User(rs.getInt("id"),rs.getString("username")
+                    ,UserType.fromCode(rs.getInt("type")));
+        }catch(SQLException e){
+            e.printStackTrace();
+            Main.logE("Failed to fetch user from name: " + name);
+            return null;
+        }
+    }
+
+    public static User tryLoadCredentialedUser(String name, String password) throws NullPointerException{
+        try{
+            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE username = ? AND password = ?");
+            st.setString(1, name);
+            st.setString(2, password);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next())
+                throw new NullPointerException("Cannot find user with name: " + name);
+
+            return new User(rs.getInt("id"),rs.getString("username")
+                    ,UserType.fromCode(rs.getInt("type")));
+        }catch(SQLException e){
+            e.printStackTrace();
+            Main.logE("Failed to fetch user from name: " + name);
             return null;
         }
     }
@@ -51,7 +89,7 @@ public class User {
         NORMAL(0),
         ADMIN(1);
 
-        private int type;
+        public int type;
         UserType(int i){
             type = i;
         }
