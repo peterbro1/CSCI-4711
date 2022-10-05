@@ -3,6 +3,7 @@ package me.gmx.product_rating_project.ui.user;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 
 public class RatingViewController {
 
-    private ObservableList<String> ratingList;
+    private static ObservableList<String> ratingList;
 
     public static Product product;
     @FXML
@@ -20,6 +21,9 @@ public class RatingViewController {
 
     @FXML
     public ChoiceBox<String> ratingMenu;
+
+    @FXML
+    public Button submitButton;
 
     @FXML
     public void initialize(){
