@@ -1,14 +1,22 @@
 package me.gmx.product_rating_project.db;
 
+import javafx.scene.image.Image;
 import me.gmx.product_rating_project.Main;
 import me.gmx.product_rating_project.PRSApplication;
 import me.gmx.product_rating_project.Product;
 import me.gmx.product_rating_project.auth.PasswordUtil;
 import me.gmx.product_rating_project.auth.User;
 
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /*
 Not sure what I want to do with this class yet.
  */
@@ -58,7 +66,7 @@ public class DatabaseManager {
             PreparedStatement st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS USERS (id integer primary key AUTOINCREMENT, username text UNIQUE, password text, type integer);");
             st.executeUpdate();
             //Create products table
-            st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS PRODUCTS (id integer primary key AUTOINCREMENT, name text, img_path text);");
+            st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS PRODUCTS (id integer primary key AUTOINCREMENT, name text);");
             st.executeUpdate();
             //Create ratings table
             st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS RATINGS (uuid text primary key, product REFERENCES PRODUCTS, rating integer, comment text, user REFERENCES USERS);");
@@ -80,9 +88,7 @@ public class DatabaseManager {
 
 
 
-        addProduct("Blender", Main.class.getResource("/img/blender.png").getPath());
-        addProduct("Viking Hat", Main.class.getResource("/img/viking_hat.png").getPath());
-        addProduct("Printer", Main.class.getResource("/img/printer.png").getPath());
+
     }
 
     private void addUser(String username, String password, User.UserType type){
@@ -100,13 +106,12 @@ public class DatabaseManager {
         }
     }
 
-    private void addProduct(String name, String img_path){
+    private void addProduct(String name){
         try {
 
-            PreparedStatement st = connection.prepareStatement("INSERT INTO PRODUCTS VALUES (?,?,?)");
+            PreparedStatement st = connection.prepareStatement("INSERT INTO PRODUCTS VALUES (?,?)");
             //st.setInt(1,0); //Just dont set, autoincrement ftw
             st.setString(2,name);
-            st.setString(3, img_path);
             st.executeUpdate();
 
         }catch(SQLException e){
@@ -129,6 +134,21 @@ public class DatabaseManager {
 
         }
         return false;
+    }
+
+    public List<Product> fetchAllProducts(){
+        List<Product> products = new ArrayList<>();
+        try{
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM PRODUCTS");
+            ResultSet rs = st.executeQuery();
+            while (rs.next())
+                products.add(new Product(rs.getInt("id"),rs.getString("name")));
+
+            return products;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     public void init(){

@@ -35,8 +35,6 @@ public class RatingViewController {
         }
         ratingMenu.getItems().addAll(ratingList);
         productNameLabel.setText(product.getName());
-
-
     }
 
 

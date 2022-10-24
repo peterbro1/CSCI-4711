@@ -13,16 +13,14 @@ import java.sql.SQLException;
 
 public class Product {
 
-    public Image image;
     private String name;
     private int id;
     private short rating;
 
 
-    public Product(int id, String name, FileInputStream image_file){
+    public Product(int id, String name){
         this.id = id;
         this.name = name;
-        this.image = new Image(image_file);
     }
 
     public static Product loadProduct(int id) {
@@ -34,18 +32,10 @@ public class Product {
             if (!rs.next())
                 throw new NullPointerException("Cannot find product with id: " + id);
 
-            f = new File(PRSApplication.getInstance().getClass().getClassLoader().getResource(rs.getString("img_path")).getPath());
-
-            return new Product(rs.getInt("id"), rs.getString("name")
-                    , new FileInputStream(f));
+            return new Product(rs.getInt("id"), rs.getString("name"));
         } catch (SQLException e) {
             e.printStackTrace();
             Main.logE("Failed to fetch product from ID: " + id);
-            return null;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Main.logE("Could not find file: " + f.getPath());
-            System.exit(1);
             return null;
         }
 
@@ -57,19 +47,14 @@ public class Product {
             PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS");
             ResultSet rs = st.executeQuery();
             while (rs.next()){
-                f = new File(PRSApplication.getInstance().getClass().getClassLoader().getResource(rs.getString("img_path")).getPath());
-                Product p = new Product(rs.getInt("id"), rs.getString("name")
-                        , new FileInputStream(f));
+                f = new File(Main.class.getResource(rs.getString("img_path")).getPath());
+                Product p = new Product(rs.getInt("id"), rs.getString("name"));
                 PRSApplication.getInstance().productList.add(p);
             }
 
             ;
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Main.logE("Could not find file: " + f.getPath());
-            System.exit(1);
         }
     }
 
