@@ -35,7 +35,6 @@ public class User {
 
 
     //Insecure?
-    @Deprecated
     public static User loadUserFromName(String name) throws NullPointerException{
         try{
             PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE username = ?");

@@ -85,10 +85,27 @@ public class DatabaseManager {
         addUser("alice", "Password123", User.UserType.NORMAL);
         addUser("bob", "Sup3rSECURE", User.UserType.NORMAL);
         addUser("charlie", "adm1nUs3r", User.UserType.ADMIN);
+        addProduct("Viking Hat");
+        addProduct("Blender");
+        addProduct("Crazy Slime");
+        addProduct("LG TV 60\"");
+
+        addPurchase(User.loadUserFromName("alice"),Product.loadProductFromName("Viking Hat"));
+        addPurchase(User.loadUserFromName("alice"),Product.loadProductFromName("Crazy Slime"));
 
 
+    }
 
-
+    private void addPurchase(User u, Product p){
+        try {
+            PreparedStatement st = connection.prepareStatement("INSERT INTO PURCHASES VALUES (?,?)");
+            st.setInt(1,u.getId());
+            st.setInt(2,p.getId());
+            st.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     private void addUser(String username, String password, User.UserType type){
@@ -99,7 +116,6 @@ public class DatabaseManager {
             st.setString(3, PasswordUtil.hashPassword(password, username));
             st.setInt(4, type.type);
             st.executeUpdate();
-
         }catch(SQLException e){
             e.printStackTrace();
             System.exit(1);
@@ -108,7 +124,6 @@ public class DatabaseManager {
 
     private void addProduct(String name){
         try {
-
             PreparedStatement st = connection.prepareStatement("INSERT INTO PRODUCTS VALUES (?,?)");
             //st.setInt(1,0); //Just dont set, autoincrement ftw
             st.setString(2,name);
@@ -137,6 +152,21 @@ public class DatabaseManager {
     }
 
     public List<Product> fetchAllProducts(){
+        List<Product> products = new ArrayList<>();
+        try{
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM PRODUCTS");
+            ResultSet rs = st.executeQuery();
+            while (rs.next())
+                products.add(new Product(rs.getInt("id"),rs.getString("name")));
+
+            return products;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Product> fetchAllProductsByUser(User u){
         List<Product> products = new ArrayList<>();
         try{
             PreparedStatement st = connection.prepareStatement("SELECT * FROM PRODUCTS");

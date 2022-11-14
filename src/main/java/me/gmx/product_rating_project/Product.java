@@ -24,7 +24,6 @@ public class Product {
     }
 
     public static Product loadProduct(int id) {
-        File f = null;
         try {
             PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS WHERE id = ?");
             st.setInt(1, id);
@@ -40,6 +39,25 @@ public class Product {
         }
 
     }
+
+    public static Product loadProductFromName(String s) {
+        try {
+            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS WHERE name = ?");
+            st.setString(1, s);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next())
+                throw new NullPointerException("Cannot find product with name: " + s);
+
+            return new Product(rs.getInt("id"), rs.getString("name"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Main.logE("Failed to fetch product from name: " + s);
+            return null;
+        }
+
+    }
+
+
 
     public static void loadProductsIntoMemory(){
         File f = null;

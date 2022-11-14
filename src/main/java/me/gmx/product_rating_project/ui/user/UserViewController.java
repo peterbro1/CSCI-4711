@@ -92,14 +92,11 @@ public class UserViewController {
                     e.printStackTrace();
                 }
             }
-        });/*
-        GridPane.setConstraints(ratingLabel,0,0);
-        GridPane.setConstraints(title,0,1);
-        GridPane.setConstraints(button,0,2);*/
-/*        GridPane.setHgrow(ratingLabel, Priority.SOMETIMES);
-        GridPane.setHgrow(title, Priority.SOMETIMES);
-        GridPane.setHgrow(button, Priority.SOMETIMES);*/
-
+        });
+        if (PRSApplication.getInstance().db.hasUserRated(PRSApplication.getInstance().getcurrentUser(), product)) {
+            button.setDisable(true);
+            button.setText("Rated");
+        }
         ColumnConstraints c = new ColumnConstraints();
         c.setPercentWidth(33.333);
         GridPane.setHalignment(ratingLabel, HPos.CENTER);
