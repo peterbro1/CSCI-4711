@@ -1,12 +1,11 @@
-package me.gmx.product_rating_project.auth;
+package me.gmx.product_rating_project.entity;
 
 import me.gmx.product_rating_project.Main;
-import me.gmx.product_rating_project.PRSApplication;
+import me.gmx.product_rating_project.control.PRSApplication;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class User {
 

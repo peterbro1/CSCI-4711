@@ -1,4 +1,4 @@
-package me.gmx.product_rating_project.auth;
+package me.gmx.product_rating_project.util;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

@@ -1,9 +1,9 @@
-package me.gmx.product_rating_project;
+package me.gmx.product_rating_project.control;
 
-import me.gmx.product_rating_project.auth.User;
-import me.gmx.product_rating_project.db.DatabaseManager;
-import me.gmx.product_rating_project.thread.GUIThread;
-import me.gmx.product_rating_project.ui.GUIController;
+import me.gmx.product_rating_project.entity.Product;
+import me.gmx.product_rating_project.entity.User;
+import me.gmx.product_rating_project.boundary.GUIThread;
+import me.gmx.product_rating_project.boundary.ui.GUIController;
 
 import java.util.ArrayList;
 import java.util.List;

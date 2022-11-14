@@ -1,13 +1,13 @@
-package me.gmx.product_rating_project.ui;
+package me.gmx.product_rating_project.boundary.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import me.gmx.product_rating_project.PRSApplication;
-import me.gmx.product_rating_project.Product;
-import me.gmx.product_rating_project.ui.user.RatingViewController;
+import me.gmx.product_rating_project.control.PRSApplication;
+import me.gmx.product_rating_project.entity.Product;
+import me.gmx.product_rating_project.boundary.ui.user.RatingViewController;
 
 import java.io.IOException;
 
@@ -72,7 +72,7 @@ public class GUIController extends Application {
     public synchronized static GUIController getInstance() {
         if (ins == null) {
             PRSApplication.getInstance().startGUIThread();
-            while (ins == null)
+            while (ins == null)//wait for init
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

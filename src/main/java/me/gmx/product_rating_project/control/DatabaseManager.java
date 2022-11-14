@@ -1,16 +1,12 @@
-package me.gmx.product_rating_project.db;
+package me.gmx.product_rating_project.control;
 
-import javafx.scene.image.Image;
 import me.gmx.product_rating_project.Main;
-import me.gmx.product_rating_project.PRSApplication;
-import me.gmx.product_rating_project.Product;
-import me.gmx.product_rating_project.auth.PasswordUtil;
-import me.gmx.product_rating_project.auth.User;
+import me.gmx.product_rating_project.entity.Product;
+import me.gmx.product_rating_project.util.PasswordUtil;
+import me.gmx.product_rating_project.entity.User;
 
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;

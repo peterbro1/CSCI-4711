@@ -1,12 +1,9 @@
-package me.gmx.product_rating_project;
+package me.gmx.product_rating_project.entity;
 
-import javafx.scene.image.Image;
-import me.gmx.product_rating_project.auth.User;
+import me.gmx.product_rating_project.Main;
+import me.gmx.product_rating_project.control.PRSApplication;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package me.gmx.product_rating_project.ui.user;
+package me.gmx.product_rating_project.boundary.ui.user;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -6,8 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import me.gmx.product_rating_project.Product;
+import me.gmx.product_rating_project.entity.Product;
 
 import java.util.Arrays;
 

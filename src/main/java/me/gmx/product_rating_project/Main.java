@@ -1,8 +1,8 @@
 package me.gmx.product_rating_project;
 
-import me.gmx.product_rating_project.auth.PasswordUtil;
-import me.gmx.product_rating_project.db.DatabaseManager;
-import me.gmx.product_rating_project.ui.GUIController;
+import me.gmx.product_rating_project.control.DatabaseManager;
+import me.gmx.product_rating_project.boundary.ui.GUIController;
+import me.gmx.product_rating_project.control.PRSApplication;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

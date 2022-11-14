@@ -1,16 +1,14 @@
-package me.gmx.product_rating_project.ui;
+package me.gmx.product_rating_project.boundary.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import me.gmx.product_rating_project.PRSApplication;
-import me.gmx.product_rating_project.auth.PasswordUtil;
-import me.gmx.product_rating_project.auth.User;
+import me.gmx.product_rating_project.control.PRSApplication;
+import me.gmx.product_rating_project.util.PasswordUtil;
+import me.gmx.product_rating_project.entity.User;
 import me.gmx.product_rating_project.util.ValidationUtil;
-
-import java.io.IOException;
 
 public class BaseViewController {
 
