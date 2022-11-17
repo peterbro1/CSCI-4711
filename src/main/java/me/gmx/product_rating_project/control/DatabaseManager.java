@@ -2,6 +2,7 @@ package me.gmx.product_rating_project.control;
 
 import me.gmx.product_rating_project.Main;
 import me.gmx.product_rating_project.entity.Product;
+import me.gmx.product_rating_project.entity.Review;
 import me.gmx.product_rating_project.util.PasswordUtil;
 import me.gmx.product_rating_project.entity.User;
 
@@ -9,6 +10,7 @@ import me.gmx.product_rating_project.entity.User;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +24,8 @@ public class DatabaseManager {
     private static final String PATH = "./database.db";
 
     private final PRSApplication ins;
+
+    private final DecimalFormat df = new DecimalFormat("#.#");
     public DatabaseManager(PRSApplication ins){
         this.ins = ins;
     }
@@ -65,7 +69,7 @@ public class DatabaseManager {
             st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS PRODUCTS (id integer primary key AUTOINCREMENT, name text);");
             st.executeUpdate();
             //Create ratings table
-            st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS RATINGS (uuid text primary key, product REFERENCES PRODUCTS, rating integer, comment text, user REFERENCES USERS);");
+            st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS RATINGS (user REFERENCES USERS, product REFERENCES PRODUCTS , rating integer, comment text, confirmed integer, primary key(user,product));"); //product, user, rating, comment
             st.executeUpdate();
             //Create purchases table
             st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS PURCHASES (user REFERENCES USERS, product REFERENCES PRODUCTS);");
@@ -80,7 +84,7 @@ public class DatabaseManager {
         System.out.println("Hardcoding values...");
         addUser("alice", "Password123", User.UserType.NORMAL);
         addUser("bob", "Sup3rSECURE", User.UserType.NORMAL);
-        addUser("charlie", "adm1nUs3r", User.UserType.ADMIN);
+        addUser("charlie", "Password456", User.UserType.ADMIN);
         addProduct("Viking Hat");
         addProduct("Blender");
         addProduct("Crazy Slime");
@@ -145,6 +149,85 @@ public class DatabaseManager {
 
         }
         return false;
+    }
+
+    public boolean addUserReview(Review review, User user, Product product){
+        try {//product, user, rating, comment
+            PreparedStatement st = connection.prepareStatement("INSERT INTO RATINGS VALUES (?, ?, ?, ?, ?)");
+            st.setInt(1,user.getId());
+            st.setInt(2,product.getId());
+            st.setInt(3,review.getRating());
+            st.setString(4,review.getComment());
+            st.setInt(5,0);//0 = unconfirmed
+            System.out.println(st.toString());
+            st.executeUpdate();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void confirmUserReview(Review r){
+        try{
+            PreparedStatement st = connection.prepareStatement("UPDATE RATINGS SET confirmed = 1 WHERE user like ?" +
+                    " and product like ?");
+            st.setInt(1,r.getUser().getId());
+            st.setInt(2,r.getProduct().getId());
+            st.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUserReview(Review r){
+        try{
+            PreparedStatement st = connection.prepareStatement("DELETE FROM RATINGS WHERE user LIKE ? AND product LIKE ?");
+            st.setInt(1,r.getUser().getId());
+            st.setInt(2,r.getProduct().getId());
+            st.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public List<Review> getUnconfirmedReviews(){
+        List<Review> reviews = new ArrayList<>();
+        try{
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM RATINGS WHERE confirmed = 0");
+            ResultSet rs = st.executeQuery();
+            while (rs.next())
+                reviews.add(new Review(
+                        User.loadUserFromId(rs.getInt("user")),
+                        Product.loadProduct(rs.getInt("product")),
+                        rs.getInt("rating"),
+                        rs.getString("comment")
+                ));
+
+            return reviews;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public String getAverageRatingByProduct(Product p){
+        try{
+            int i = 0; int sum = 0;
+            PreparedStatement st = connection.prepareStatement("SELECT rating from RATINGS WHERE product = ? AND confirmed = 1");
+            st.setInt(1,p.getId());
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()){
+                i++;
+                sum+= rs.getInt("rating");
+            }
+
+            return df.format(sum/i);
+        }catch (Exception e){
+            //There are no more
+            return "Product has not been rated by anyone yet";
+        }
     }
 
     public List<Product> fetchAllProducts(){

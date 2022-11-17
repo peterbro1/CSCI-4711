@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.gmx.product_rating_project.boundary.ui.user.RatingViewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.gmx.product_rating_project.boundary.ui.user.RatingViewController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -27,7 +26,7 @@
          <children>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <TextArea prefHeight="200.0" prefWidth="150.0" promptText="Review message..." wrapText="true" BorderPane.alignment="CENTER" />
+                  <TextArea fx:id="reviewBox" prefHeight="200.0" prefWidth="150.0" promptText="Review message..." wrapText="true" BorderPane.alignment="CENTER" />
                </center>
                <top>
                   <Label fx:id="productNameLabel1" alignment="CENTER" contentDisplay="TOP" text="Review:" BorderPane.alignment="CENTER">
@@ -62,7 +61,7 @@
          <children>
             <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="NEVER">
                <center>
-                  <Button fx:id="submitButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Submit" BorderPane.alignment="CENTER" />
+                  <Button fx:id="submitButton" alignment="CENTER" mnemonicParsing="false" onAction="#submitReview" prefHeight="40.0" prefWidth="100.0" text="Submit" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </children>

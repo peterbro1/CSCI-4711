@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import me.gmx.product_rating_project.control.GUIController;
 import me.gmx.product_rating_project.control.PRSApplication;
 import me.gmx.product_rating_project.util.PasswordUtil;
 import me.gmx.product_rating_project.entity.User;
@@ -41,8 +42,12 @@ public class BaseViewController {
         }
         String hash = PasswordUtil.hashPassword(password,username);
         try {
-            if (PRSApplication.getInstance().tryLogin(User.tryLoadCredentialedUser(username,hash))){
-                GUIController.getInstance().openUserPanel();
+            User user = User.tryLoadCredentialedUser(username,hash);
+            if (PRSApplication.getInstance().tryLogin(user)){
+                if (user.type == User.UserType.NORMAL)
+                    GUIController.getInstance().openUserPanel();
+                else if (user.type == User.UserType.ADMIN)
+                    GUIController.getInstance().openAdminPanel();
             }else{
                 alertLabel.setText(loginFailMsg);
             }

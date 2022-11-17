@@ -9,6 +9,7 @@ module me.gmx.product_rating_project {
     exports me.gmx.product_rating_project.boundary.ui;
     opens me.gmx.product_rating_project.boundary.ui to javafx.fxml;
     opens me.gmx.product_rating_project.boundary.ui.user to javafx.fxml;
+    opens me.gmx.product_rating_project.boundary.ui.admin to javafx.fxml;
     exports me.gmx.product_rating_project.entity;
     opens me.gmx.product_rating_project.entity to javafx.fxml;
     exports me.gmx.product_rating_project.control;

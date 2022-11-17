@@ -1,7 +1,7 @@
 package me.gmx.product_rating_project.boundary;
 
 import javafx.application.Application;
-import me.gmx.product_rating_project.boundary.ui.GUIController;
+import me.gmx.product_rating_project.control.GUIController;
 
 public class GUIThread extends Thread {
 

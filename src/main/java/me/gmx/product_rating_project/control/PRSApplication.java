@@ -3,7 +3,6 @@ package me.gmx.product_rating_project.control;
 import me.gmx.product_rating_project.entity.Product;
 import me.gmx.product_rating_project.entity.User;
 import me.gmx.product_rating_project.boundary.GUIThread;
-import me.gmx.product_rating_project.boundary.ui.GUIController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +55,8 @@ public class PRSApplication {
             e.printStackTrace();
         }
     }
+
+
 
 
     public void startGUIThread(){
