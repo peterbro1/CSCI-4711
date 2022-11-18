@@ -92,8 +92,8 @@ public class UserViewController {
         GridPane.setHalignment(title, HPos.CENTER);
         GridPane.setHalignment(button, HPos.CENTER);
 
-        p.addColumn(0,ratingLabel);
-        p.addColumn(1,title);
+        p.addColumn(1,ratingLabel);
+        p.addColumn(0,title);
         p.addColumn(2,button);
         p.getColumnConstraints().addAll(c,c,c);
 
