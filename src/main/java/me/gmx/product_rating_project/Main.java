@@ -1,8 +1,8 @@
 package me.gmx.product_rating_project;
 
-import me.gmx.product_rating_project.control.DatabaseManager;
+import me.gmx.product_rating_project.control.DBConnector;
 import me.gmx.product_rating_project.control.GUIController;
-import me.gmx.product_rating_project.control.PRSApplication;
+import me.gmx.product_rating_project.control.Controller;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,19 +12,19 @@ import java.util.logging.Logger;
 public class Main {
 
     public static Logger logger;
-    private DatabaseManager db;
+    private DBConnector db;
     private GUIController gui;
 
 
     public static void main(String[] args) {
 
         logger = Logger.getLogger("log");
-        PRSApplication app = new PRSApplication();
+        Controller app = new Controller();
         app.init();
     }
 
     public static void test(){
-        DatabaseManager db = new DatabaseManager(PRSApplication.getInstance());
+        DBConnector db = new DBConnector(Controller.getInstance());
         db.init();
         PreparedStatement st = db.getPreparedStatement("SELECT * FROM USERS WHERE username LIKE \"alice\"");
         try {

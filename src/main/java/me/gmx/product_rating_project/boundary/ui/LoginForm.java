@@ -6,12 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import me.gmx.product_rating_project.control.GUIController;
-import me.gmx.product_rating_project.control.PRSApplication;
+import me.gmx.product_rating_project.control.Controller;
 import me.gmx.product_rating_project.util.PasswordUtil;
 import me.gmx.product_rating_project.entity.User;
 import me.gmx.product_rating_project.util.ValidationUtil;
 
-public class BaseViewController {
+public class LoginForm {
 
     private final String loginFailMsg = "Incorrect username or password!";
     @FXML
@@ -43,7 +43,7 @@ public class BaseViewController {
         String hash = PasswordUtil.hashPassword(password,username);
         try {
             User user = User.tryLoadCredentialedUser(username,hash);
-            if (PRSApplication.getInstance().tryLogin(user)){
+            if (Controller.getInstance().tryLogin(user)){
                 if (user.type == User.UserType.NORMAL)
                     GUIController.getInstance().openUserPanel();
                 else if (user.type == User.UserType.ADMIN)

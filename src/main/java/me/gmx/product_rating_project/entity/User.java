@@ -1,7 +1,7 @@
 package me.gmx.product_rating_project.entity;
 
 import me.gmx.product_rating_project.Main;
-import me.gmx.product_rating_project.control.PRSApplication;
+import me.gmx.product_rating_project.control.Controller;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +17,7 @@ public class User {
 
     public static User loadUserFromId(int id) throws NullPointerException{
         try{
-            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE id = ?");
+            PreparedStatement st = Controller.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE id = ?");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next())
@@ -36,7 +36,7 @@ public class User {
     //Insecure?
     public static User loadUserFromName(String name) throws NullPointerException{
         try{
-            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE username = ?");
+            PreparedStatement st = Controller.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE username = ?");
             st.setString(1, name);
             ResultSet rs = st.executeQuery();
             if (!rs.next())
@@ -53,7 +53,7 @@ public class User {
 
     public static User tryLoadCredentialedUser(String name, String password) throws NullPointerException{
         try{
-            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE username = ? AND password = ?");
+            PreparedStatement st = Controller.getInstance().db.getPreparedStatement("SELECT * FROM USERS WHERE username = ? AND password = ?");
             st.setString(1, name);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();

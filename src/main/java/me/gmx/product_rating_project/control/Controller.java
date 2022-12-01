@@ -7,7 +7,7 @@ import me.gmx.product_rating_project.boundary.GUIThread;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PRSApplication {
+public class Controller {
 
     private GUIThread thread;
 
@@ -15,9 +15,9 @@ public class PRSApplication {
     public List<Product> productList;
 
     private User currentUser;
-    public DatabaseManager db;
-    private static PRSApplication ins;
-    public PRSApplication(){
+    public DBConnector db;
+    private static Controller ins;
+    public Controller(){
         ins = this;
         productList = new ArrayList<>();
     }
@@ -25,7 +25,7 @@ public class PRSApplication {
     public void init(){
         startGUIThread();
         //Dependency injection :D
-        db = new DatabaseManager(ins);
+        db = new DBConnector(ins);
         db.init();
     }
 
@@ -66,7 +66,7 @@ public class PRSApplication {
     }
 
     //Dependency injection D:
-    public static PRSApplication getInstance(){
+    public static Controller getInstance(){
         return ins;
     }
 

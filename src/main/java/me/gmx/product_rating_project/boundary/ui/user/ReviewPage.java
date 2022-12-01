@@ -4,13 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import me.gmx.product_rating_project.control.PRSApplication;
+import me.gmx.product_rating_project.control.Controller;
 import me.gmx.product_rating_project.entity.Product;
 import me.gmx.product_rating_project.entity.Review;
 
 import java.util.Arrays;
 
-public class RatingViewController {
+public class ReviewPage {
 
     private static ObservableList<String> ratingList;
 
@@ -41,12 +41,12 @@ public class RatingViewController {
 
 
     public void submitReview(){//product, user, rating, comment
-        Review review = new Review(PRSApplication.getInstance().getcurrentUser()
+        Review review = new Review(Controller.getInstance().getcurrentUser()
                 , product, Integer.valueOf(ratingMenu.getValue()), reviewBox.getText());
-        PRSApplication.getInstance().db.addUserReview(review, PRSApplication.getInstance().getcurrentUser(),
+        Controller.getInstance().db.addUserReview(review, Controller.getInstance().getcurrentUser(),
                 product);
         try {
-            PRSApplication.getInstance().gui.openUserPanel();
+            Controller.getInstance().gui.openUserPanel();
         }catch(Exception e){
             e.printStackTrace();
         }

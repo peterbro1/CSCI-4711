@@ -1,7 +1,7 @@
 package me.gmx.product_rating_project.entity;
 
 import me.gmx.product_rating_project.Main;
-import me.gmx.product_rating_project.control.PRSApplication;
+import me.gmx.product_rating_project.control.Controller;
 
 import java.io.File;
 import java.sql.PreparedStatement;
@@ -22,7 +22,7 @@ public class Product {
 
     public static Product loadProduct(int id) {
         try {
-            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS WHERE id = ?");
+            PreparedStatement st = Controller.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS WHERE id = ?");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next())
@@ -39,7 +39,7 @@ public class Product {
 
     public static Product loadProductFromName(String s) {
         try {
-            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS WHERE name = ?");
+            PreparedStatement st = Controller.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS WHERE name = ?");
             st.setString(1, s);
             ResultSet rs = st.executeQuery();
             if (!rs.next())
@@ -59,12 +59,12 @@ public class Product {
     public static void loadProductsIntoMemory(){
         File f = null;
         try {
-            PreparedStatement st = PRSApplication.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS");
+            PreparedStatement st = Controller.getInstance().db.getPreparedStatement("SELECT * FROM PRODUCTS");
             ResultSet rs = st.executeQuery();
             while (rs.next()){
                 f = new File(Main.class.getResource(rs.getString("img_path")).getPath());
                 Product p = new Product(rs.getInt("id"), rs.getString("name"));
-                PRSApplication.getInstance().productList.add(p);
+                Controller.getInstance().productList.add(p);
             }
 
             ;

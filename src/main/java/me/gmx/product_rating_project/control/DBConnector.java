@@ -18,15 +18,15 @@ import java.util.List;
 /*
 Not sure what I want to do with this class yet.
  */
-public class DatabaseManager {
+public class DBConnector {
     private static Connection connection;
 
     private static final String PATH = "./database.db";
 
-    private final PRSApplication ins;
+    private final Controller ins;
 
     private final DecimalFormat df = new DecimalFormat("#.#");
-    public DatabaseManager(PRSApplication ins){
+    public DBConnector(Controller ins){
         this.ins = ins;
     }
 
@@ -159,7 +159,6 @@ public class DatabaseManager {
             st.setInt(3,review.getRating());
             st.setString(4,review.getComment());
             st.setInt(5,0);//0 = unconfirmed
-            System.out.println(st.toString());
             st.executeUpdate();
             return true;
         }catch (Exception e){
