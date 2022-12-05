@@ -61,7 +61,7 @@
          <children>
             <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="NEVER">
                <center>
-                  <Button fx:id="submitButton" alignment="CENTER" mnemonicParsing="false" onAction="#submitReview" prefHeight="40.0" prefWidth="100.0" text="Submit" BorderPane.alignment="CENTER" />
+                  <Button fx:id="submitButton" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="40.0" prefWidth="100.0" text="Submit" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </children>

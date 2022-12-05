@@ -79,7 +79,7 @@
                     </rowConstraints>
                      <children>
                               <Button fx:id="rejectButton" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#rejectReview" prefHeight="50.0" prefWidth="75.0" text="Reject" GridPane.halignment="CENTER" />
-                        <Button fx:id="approveButton" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#confirmReview" prefHeight="50.0" prefWidth="75.0" text="Approve" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Button fx:id="approveButton" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#approve" prefHeight="50.0" prefWidth="75.0" text="Approve" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
                </center>

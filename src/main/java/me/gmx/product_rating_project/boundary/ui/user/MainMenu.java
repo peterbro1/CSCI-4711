@@ -10,10 +10,14 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import me.gmx.product_rating_project.control.Controller;
+import me.gmx.product_rating_project.control.GUIController;
+import me.gmx.product_rating_project.control.LogoutControl;
+import me.gmx.product_rating_project.control.RateControl;
 import me.gmx.product_rating_project.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import me.gmx.product_rating_project.entity.User;
 
 public class MainMenu {
 
@@ -32,21 +36,31 @@ public class MainMenu {
     public HBox dummyProduct;
 
 
+    public static void open(String usn)  {
+        try {
+            GUIController.getInstance().openUserPanel();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void logout(){
-        Controller.getInstance().logout();
+        LogoutControl.logout(Controller.currentUser.getName());
     }
     @FXML
     public void initialize(){
         userLabel.setText(Controller.getInstance().getcurrentUser().getName());
         productList.getChildren().addAll(generateProducts());
-
     }
 
     public List<GridPane> generateProducts(){
-        List<Product> products = Controller.getInstance().db.fetchAllProducts();
+        List<Product> products = Controller.getInstance().db.getItems(Controller.currentUser);
         List<GridPane> hb = new ArrayList<>();
-        for (Product p : products)
+        for (Product p : products) {
             hb.add(createProduct(p));
+            System.out.printf("%s ", p.getName());
+        }
+
         return hb;
     }
 
@@ -73,10 +87,8 @@ public class MainMenu {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
-
                 try {
-                    Controller.getInstance().gui.openRatingPanel(product);
+                    RateControl.rate(Controller.currentUser, product);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -102,6 +114,8 @@ public class MainMenu {
         //p.getChildren().addAll(title,ratingLabel, button);
         return p;
     }
+
+
 
 
 }

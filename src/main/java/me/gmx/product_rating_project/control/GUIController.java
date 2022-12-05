@@ -68,7 +68,7 @@ public class GUIController extends Application {
         stage.show();
     }
 
-    public void openRatingPanel(Product p)throws IOException{
+    public void createReviewPage(Product p)throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/rating-view.fxml"));
         ReviewPage.product = p;
@@ -87,7 +87,6 @@ public class GUIController extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 
     public synchronized static GUIController getInstance() {
         if (ins == null) {

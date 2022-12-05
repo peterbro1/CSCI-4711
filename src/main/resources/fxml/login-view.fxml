@@ -28,7 +28,7 @@
          <Label fx:id="alertLabel" alignment="CENTER" />
          <TextField fx:id="usernameField" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" promptText="Username" />
          <PasswordField fx:id="passwordField" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Password" />
-          <Button fx:id="loginButton" lineSpacing="2.0" onAction="#attemptLogin" text="Login" textOverrun="WORD_ELLIPSIS" translateY="30.0">
+          <Button fx:id="loginButton" lineSpacing="2.0" onAction="#submit" text="Login" textOverrun="WORD_ELLIPSIS" translateY="30.0">
             <VBox.margin>
                <Insets />
             </VBox.margin>

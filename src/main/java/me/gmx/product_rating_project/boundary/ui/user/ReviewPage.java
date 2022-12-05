@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import me.gmx.product_rating_project.control.Controller;
+import me.gmx.product_rating_project.control.RateControl;
 import me.gmx.product_rating_project.entity.Product;
 import me.gmx.product_rating_project.entity.Review;
 
@@ -40,11 +41,10 @@ public class ReviewPage {
     }
 
 
-    public void submitReview(){//product, user, rating, comment
+    public void submit(){//product, user, rating, comment
         Review review = new Review(Controller.getInstance().getcurrentUser()
                 , product, Integer.valueOf(ratingMenu.getValue()), reviewBox.getText());
-        Controller.getInstance().db.addUserReview(review, Controller.getInstance().getcurrentUser(),
-                product);
+        RateControl.submit(review);
         try {
             Controller.getInstance().gui.openUserPanel();
         }catch(Exception e){

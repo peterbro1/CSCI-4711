@@ -12,7 +12,9 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import me.gmx.product_rating_project.control.ApproveControl;
 import me.gmx.product_rating_project.control.Controller;
+import me.gmx.product_rating_project.control.LogoutControl;
 import me.gmx.product_rating_project.entity.Review;
 
 public class AdminPage {
@@ -34,7 +36,7 @@ public class AdminPage {
 
 
     public void logout(){
-        Controller.getInstance().logout();
+        LogoutControl.logout(Controller.currentUser.getName());
     }
     @FXML
     public void initialize(){
@@ -72,7 +74,8 @@ public class AdminPage {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    Controller.getInstance().gui.openReviewPanel(r);
+                    //Controller.getInstance().gui.openReviewPanel(r);
+                    ApproveControl.approve(Controller.currentUser,r);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -91,6 +94,10 @@ public class AdminPage {
         return b;*/
         //p.getChildren().addAll(title,ratingLabel, button);
         return p;
+    }
+
+    public static void submit(){
+
     }
 
 

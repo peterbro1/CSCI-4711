@@ -2,6 +2,7 @@ package me.gmx.product_rating_project.boundary.ui.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import me.gmx.product_rating_project.control.ApproveControl;
 import me.gmx.product_rating_project.control.Controller;
 import me.gmx.product_rating_project.entity.Review;
 
@@ -33,8 +34,8 @@ public class ApprovePage {
     }
 
 
-    public void confirmReview(){//product, user, rating, comment
-        Controller.getInstance().db.confirmUserReview(review);
+    public void approve(){//product, user, rating, comment
+        ApproveControl.approve(Controller.currentUser,review);
         try {
             Controller.getInstance().gui.openAdminPanel();
         }catch (Exception e){
@@ -43,11 +44,7 @@ public class ApprovePage {
 
     }
 
-    public void rejectReview(){
-        Controller.getInstance().db.deleteUserReview(review);
-        try {
-            Controller.getInstance().gui.openAdminPanel();
-        }catch (Exception e){
-            e.printStackTrace();
-        }    }
+    public void rejectReview() {
+        ApproveControl.deny(review);
+    }
 }

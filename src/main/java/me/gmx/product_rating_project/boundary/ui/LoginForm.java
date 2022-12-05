@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import me.gmx.product_rating_project.control.GUIController;
 import me.gmx.product_rating_project.control.Controller;
+import me.gmx.product_rating_project.control.LoginControl;
 import me.gmx.product_rating_project.util.PasswordUtil;
 import me.gmx.product_rating_project.entity.User;
 import me.gmx.product_rating_project.util.ValidationUtil;
@@ -27,7 +28,7 @@ public class LoginForm {
     private Label alertLabel;
 
     @FXML
-    protected void attemptLogin() {
+    protected void submit() {
         String username, password;
         username = usernameField.getText();
         password = passwordField.getText();
@@ -42,11 +43,11 @@ public class LoginForm {
         }
         String hash = PasswordUtil.hashPassword(password,username);
         try {
-            User user = User.tryLoadCredentialedUser(username,hash);
-            if (Controller.getInstance().tryLogin(user)){
-                if (user.type == User.UserType.NORMAL)
+            LoginControl.submit(username,hash);
+            if (LoginControl.verifyAccount()){
+                if (Controller.currentUser.type == User.UserType.NORMAL)
                     GUIController.getInstance().openUserPanel();
-                else if (user.type == User.UserType.ADMIN)
+                else if (Controller.currentUser.type == User.UserType.ADMIN)
                     GUIController.getInstance().openAdminPanel();
             }else{
                 alertLabel.setText(loginFailMsg);

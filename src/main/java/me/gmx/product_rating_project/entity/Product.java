@@ -19,6 +19,11 @@ public class Product {
         this.id = id;
         this.name = name;
     }
+    public Product(int id){
+        Product p = loadProduct(id);
+        this.id = id;
+        this.name = p.getName();
+    }
 
     public static Product loadProduct(int id) {
         try {

@@ -23,24 +23,6 @@ public class Main {
         app.init();
     }
 
-    public static void test(){
-        DBConnector db = new DBConnector(Controller.getInstance());
-        db.init();
-        PreparedStatement st = db.getPreparedStatement("SELECT * FROM USERS WHERE username LIKE \"alice\"");
-        try {
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()){
-                System.out.println(rs.getString("username"));
-                System.out.println(rs.getString("password"));
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        System.exit(0);
-    }
 
     public static void logI(String s){
         logger.log(Level.INFO, "[INFO] " + s);

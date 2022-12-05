@@ -14,7 +14,7 @@ public class Controller {
     public GUIController gui;
     public List<Product> productList;
 
-    private User currentUser;
+    public static User currentUser;
     public DBConnector db;
     private static Controller ins;
     public Controller(){
@@ -46,15 +46,6 @@ public class Controller {
             this.gui = c;
     }
 
-    public void logout(){
-
-        currentUser = null;
-        try {
-            GUIController.getInstance().openLoginPanel();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
 
 

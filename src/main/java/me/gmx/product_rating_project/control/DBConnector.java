@@ -74,6 +74,12 @@ public class DBConnector {
             //Create purchases table
             st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS PURCHASES (user REFERENCES USERS, product REFERENCES PRODUCTS);");
             st.executeUpdate();
+            //Create logout_log table
+            st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS LOGOUT_LOG (name text, date text);");
+            st.executeUpdate();
+            //Create logout_log table
+            st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS LOGIN_LOG (name text, date text);");
+            st.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
             System.exit(1);
@@ -83,7 +89,7 @@ public class DBConnector {
     private void hardcodeValues(){
         System.out.println("Hardcoding values...");
         addUser("alice", "Password123", User.UserType.NORMAL);
-        addUser("bob", "Sup3rSECURE", User.UserType.NORMAL);
+        addUser("bob", "Password789", User.UserType.NORMAL);
         addUser("charlie", "Password456", User.UserType.ADMIN);
         addProduct("Viking Hat");
         addProduct("Blender");
@@ -92,8 +98,32 @@ public class DBConnector {
 
         addPurchase(User.loadUserFromName("alice"),Product.loadProductFromName("Viking Hat"));
         addPurchase(User.loadUserFromName("alice"),Product.loadProductFromName("Crazy Slime"));
+        addPurchase(User.loadUserFromName("bob"),Product.loadProductFromName("Viking Hat"));
+        addPurchase(User.loadUserFromName("bob"),Product.loadProductFromName("Blender"));
+    }
 
+    public void saveLogin(String usn){
+        try {
+            PreparedStatement st = connection.prepareStatement("INSERT INTO LOGIN_LOG VALUES (?,?)");
+            st.setString(1,usn);
+            st.setString(2,String.valueOf(System.currentTimeMillis()));
+            st.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
 
+    public void saveLogout(String usn){
+        try {
+            PreparedStatement st = connection.prepareStatement("INSERT INTO LOGOUT_LOG VALUES (?,?)");
+            st.setString(1,usn);
+            st.setString(2,String.valueOf(System.currentTimeMillis()));
+            st.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     private void addPurchase(User u, Product p){
@@ -151,11 +181,11 @@ public class DBConnector {
         return false;
     }
 
-    public boolean addUserReview(Review review, User user, Product product){
+    public boolean save(Review review){
         try {//product, user, rating, comment
             PreparedStatement st = connection.prepareStatement("INSERT INTO RATINGS VALUES (?, ?, ?, ?, ?)");
-            st.setInt(1,user.getId());
-            st.setInt(2,product.getId());
+            st.setInt(1,review.getUser().getId());
+            st.setInt(2,review.getProduct().getId());
             st.setInt(3,review.getRating());
             st.setString(4,review.getComment());
             st.setInt(5,0);//0 = unconfirmed
@@ -167,7 +197,7 @@ public class DBConnector {
         }
     }
 
-    public void confirmUserReview(Review r){
+    public void approve(Review r){
         try{
             PreparedStatement st = connection.prepareStatement("UPDATE RATINGS SET confirmed = 1 WHERE user like ?" +
                     " and product like ?");
@@ -244,6 +274,23 @@ public class DBConnector {
         }
     }
 
+
+    public List<Product> getItems(User u){
+        List<Product> products = new ArrayList<>();
+        try{
+            PreparedStatement st = connection.prepareStatement("SELECT product FROM PURCHASES WHERE user = ?");
+            st.setInt(1,u.getId());
+            ResultSet rs = st.executeQuery();
+            while (rs.next())
+                products.add(new Product(rs.getInt(1)));
+
+            return products;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
     public List<Product> fetchAllProductsByUser(User u){
         List<Product> products = new ArrayList<>();
         try{
@@ -256,6 +303,15 @@ public class DBConnector {
         }catch (Exception e){
             e.printStackTrace();
             return Collections.emptyList();
+        }
+    }
+
+    public User getUser(String usn){
+        try {
+            User u = User.loadUserFromName(usn);
+            return u;
+        }catch(Exception e){
+            return null;
         }
     }
 
