@@ -22,7 +22,21 @@
                 </Label>
             </children>
         </HBox>
-        <HBox prefHeight="100.0" prefWidth="200.0" />
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <Label fx:id="productNameLabel12" alignment="CENTER" contentDisplay="TOP" text="Reviewer:" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </top>
+               <center>
+                  <Label fx:id="userLabel" text="Reviewer" wrapText="true" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+         </children></HBox>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">

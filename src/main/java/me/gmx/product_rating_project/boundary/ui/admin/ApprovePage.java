@@ -21,6 +21,9 @@ public class ApprovePage {
     public Label reviewBox;
 
     @FXML
+    public Label userLabel;
+
+    @FXML
     public Button rejectButton, approveButton;
 
     @FXML
@@ -31,6 +34,7 @@ public class ApprovePage {
         ratingLabel.setText(String.valueOf(review.getRating()));
         productNameLabel.setText(review.getProduct().getName());
         reviewBox.setText(review.getComment());
+        userLabel.setText(review.getUser().getName());
     }
 
 
